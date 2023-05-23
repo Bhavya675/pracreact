@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import {TestToComponent} from './demo.js';
+// Creating Demo Components //
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+//Component For Default Export
+function TestComponent() {
+  return <h1>This is Test Component</h1>;
 }
 
-export default App;
+//Component For Named Export
+export function Second() {
+  return (
+    <>
+      <h5>Second component</h5>
+      <div className='flex'>
+      <button>Hit me</button>
+      <TestToComponent />
+      </div>
+    
+    </>
+
+  );
+}
+export default TestComponent;
