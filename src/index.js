@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import TestComponent  from './App.js';
 import {Second} from './App.js';
+import {ListAndKey} from './App.js';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -12,7 +13,10 @@ root.render(
     <h1>React is all about components</h1>
     <TestComponent />
     <Second />
+    <ListAndKey />
   </>
 );
+
+
 
 reportWebVitals();
