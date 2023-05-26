@@ -22,7 +22,7 @@ export default function TodoList() {
             <h2>Todo List using UseCallback</h2>
             <div className='d-flex mt-4'>
                 <input type="text" className='w-25 form-control mb-3' value={inputValue} onChange={handleInputChange} />
-                <button className='btn btn-success h-25' onClick={handleAddTodo}>Add Todo</button>
+                <button className='btn btn-success h-25 ms-2' onClick={handleAddTodo}>Add Todo</button>
             </div>
             <ul>
                 {todos.map((todo, index) => (

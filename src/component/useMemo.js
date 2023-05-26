@@ -21,7 +21,8 @@ function Counter() {
 
     const isDivisibleByThree = () =>{
         let i = 0;
-        while (i < 200000) i++
+        while (i < 2000) i++
+        console.log(i)
         return counterTwo % 3 === 0
     }
 

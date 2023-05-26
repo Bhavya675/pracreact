@@ -34,7 +34,7 @@ export default function RefDemo() {
         <p>Write Here</p>
         <div className='d-flex'>
         <input type="text" className='w-25 form-control mb-3' ref={setRef} onChange={formHandler}/>
-        <button className='btn btn-secondary h-25' onClick={handleButtonClick}>Send Below</button>
+        <button className='btn btn-secondary h-25 ms-2' onClick={handleButtonClick}>Send Below</button>
         
 
         </div>
