@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import reportWebVitals from './reportWebVitals';
-import MaterialDemo from './UI/MaterialDemo';
 
+import { BrowserRouter } from 'react-router-dom';
+import App from './App'
 
-// import TestComponent  from './App.js';
+//import MaterialDemo from './UI/MaterialDemo';
+// import {TestComponent}  from './App.js';
 // import {Second} from './App.js';
 // import {ListAndKey} from './component/ListAndKey';
 // import ConditionalRenderingDemo from './component/ConditionalRendering'
@@ -15,8 +16,6 @@ import MaterialDemo from './UI/MaterialDemo';
 // import RefDemo from './component/UseRef';
 // import TodoList from './component/UseCallback'
 // import {ToggleButton} from './component/UseCallback'
-
-
 //import PrimarySearchAppBar from './component/MaterialDemo'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -37,14 +36,14 @@ root.render(
     <RefDemo />
     <TodoList />
      */}
-    
-    <MaterialDemo />
-      
+      <BrowserRouter>
+        <App />
+        {/* <MaterialDemo /> */}
+      </BrowserRouter>
+
 
     </div>
   </>
 );
 
 
-
-reportWebVitals();

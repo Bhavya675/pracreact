@@ -3,14 +3,29 @@ import { TestToComponent } from './component/demo.js';
 import React, { useEffect, useState } from "react";
 import { expenses } from './component/data.js';
 import DemoContext from './component/context.js';
+
+import Home from './Router/Home.js';
+import Orders from './Router/Orders.js';
+import Support from './Router/Support.js';
+import { Routes, Route } from 'react-router-dom';
 // import './App.css'
 
-
+export default function App() {
+  return (
+    <Routes>
+     
+        <Route path='/' element={<Home />} />
+        <Route path='/orders' element={<Orders />} />
+        <Route path='/support' element={<Support />} />
+      
+    </Routes>
+  );
+}
 
 // Creating Demo Components //
 
 //Component For Default Export
-function TestComponent() {
+export function TestComponent() {
   return <h1>This is Test Component</h1>;
 }
 
@@ -25,12 +40,12 @@ export function Second() {
 
   //useEffect Hook
   useEffect(() => {
-    if(counter !== 0){
+    if (counter !== 0) {
       document.title = counter
       alert("useEffect Works Well!")
     }
-   
-  },[counter]);
+
+  }, [counter]);
 
   //increase counter
   const increase = () => {
@@ -75,12 +90,12 @@ export function Second() {
 export const SampleContext = React.createContext();
 
 
-export const ContextExample = () =>{
-  return(
+export const ContextExample = () => {
+  return (
     <div>
-        <SampleContext.Provider value={expenses}>
-          <DemoContext />
-        </SampleContext.Provider>
+      <SampleContext.Provider value={expenses}>
+        <DemoContext />
+      </SampleContext.Provider>
     </div>
   );
 }
@@ -94,4 +109,4 @@ export const ContextExample = () =>{
 
 
 
-export default TestComponent;
+

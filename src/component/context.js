@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext } from 'react';
+
 import { SampleContext } from "../App";
 
 export default function DemoContext() {
