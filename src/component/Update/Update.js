@@ -75,8 +75,9 @@ const [password, setPassword] = useState('');
                     <Avatar>
 
                     </Avatar>
-                    <h2 className='mt-2'>Sign Up!</h2>
-                    <Typography variant='h6'>Let you just quick sign up and join our community!</Typography>
+                    <h2 className='mt-2'>Update Your Profile!</h2>
+                    <Typography variant='h6'>Update user profile</Typography>
+
 
                 </Grid>
 
@@ -84,14 +85,6 @@ const [password, setPassword] = useState('');
                     {/* ((data) => console.log(data))} */}
                     <FormControl fullWidth>
 
-                        {/* <TextField fullWidth name="username"
-                    label="Name" className='mb-3' color="secondary" {...register('name')} />
-                {errors.name && <p className='text-danger'>{errors.name.message}</p>}
-
-
-                <TextField fullWidth name="phonenumber"
-                    label="Phonenumber" type='number' className='mb-3' color="secondary"  {...register('phoneNumber')} />
-                {errors.phoneNumber && <p className='text-danger'>{errors.phoneNumber.message}</p>}  */}
                         <TextField
                             fullWidth
                             label='Name'
@@ -102,7 +95,6 @@ const [password, setPassword] = useState('');
                             className='mb-3'
                             color='secondary'
                         />
-
 
                         <TextField
                             fullWidth
@@ -115,16 +107,7 @@ const [password, setPassword] = useState('');
                             className='mb-3'
                             color='secondary'
                         />
-
-
-                        {/* <TextField fullWidth name="email"
-                    label="Email Id" type='email' className='mb-3' color="secondary"  {...register('email')} />
-                {errors.email && <p className='text-danger'>{errors.email.message}</p>}
-
-                <TextField fullWidth name="password"
-                    label="Password" type='password' className='mb-3' color="secondary"  {...register('password')} />
-                {errors.password && <p className='text-danger'>{errors.password.message}</p>} */}
-
+                
                         <TextField
                             fullWidth
                             label='Email Id'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -11,17 +11,16 @@ import FormControl from '@mui/material/FormControl';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Unstable_Grid2';
 
+const Update = () => {
 
 
-const Create = () => {
+const [username, setUserName] = useState('');
+const [phonenumber, setPhonenumber] = useState('');
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+
+
     const paperstyle = { padding: "30px 20px", width: 800, margin: "20px auto" }
-    // const st = {
-    //     maxHeight: 600
-    // } 
-
-    // ---------- Using form hook ---------- //
-
-
 
     const schema = yup.object().shape({
         username: yup.string().required('Name is required.').max(8, 'Name should be maximum 8 characters.'),
@@ -65,6 +64,9 @@ const Create = () => {
         reset();
     };
 
+    useEffect(() => {
+        setUserName();
+    })
 
     return (
         <Grid>
@@ -73,8 +75,8 @@ const Create = () => {
                     <Avatar>
 
                     </Avatar>
-                    <h2 className='mt-2'>Sign Up!</h2>
-                    <Typography variant='h6'>Let you just quick sign up and join our community!</Typography>
+                    <h2 className='mt-2'>Edit Your Profile!</h2>
+                    
 
                 </Grid>
 
@@ -104,7 +106,7 @@ const Create = () => {
                             className='mb-3'
                             color='secondary'
                         />
-
+                
                         <TextField
                             fullWidth
                             label='Email Id'
@@ -132,7 +134,7 @@ const Create = () => {
                         <FormControlLabel className='mt-3' required control={<Checkbox color="secondary" />} label="I accept the terms and conditions" />
 
                         <Tooltip title="Sign Up">
-                            <Button type='submit' variant="contained" className='mt-4 rounded-pill' color="secondary">Sign Up !</Button>
+                            <Button type='submit' variant="contained" className='mt-4 rounded-pill' color="secondary">Update</Button>
                         </Tooltip>
 
                     </FormControl>
@@ -143,7 +145,7 @@ const Create = () => {
 
             </Paper>
         </Grid>
-    );
+    )
 }
 
-export default Create
+export default Update
