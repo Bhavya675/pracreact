@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -11,17 +11,16 @@ import FormControl from '@mui/material/FormControl';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Unstable_Grid2';
 
+const Update = () => {
 
 
-const Create = () => {
+const [username, setUserName] = useState('');
+const [phonenumber, setPhonenumber] = useState('');
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+
+
     const paperstyle = { padding: "30px 20px", width: 800, margin: "20px auto" }
-    // const st = {
-    //     maxHeight: 600
-    // } 
-
-    // ---------- Using form hook ---------- //
-
-
 
     const schema = yup.object().shape({
         username: yup.string().required('Name is required.').max(8, 'Name should be maximum 8 characters.'),
@@ -45,20 +44,6 @@ const Create = () => {
     } = useForm({ resolver: yupResolver(schema) });
 
 
-
-
-
-    // const sendDataToAPI = () =>{
-    //     // e.preventDefault();
-    //     axios.post(`https://6479698ca455e257fa632c3a.mockapi.io/Signup`, {
-    //         user_Name: userName,
-    //         user_PhoneNumber: phoneNumber,
-    //         user_Email: email,
-    //         user_Password: password
-    //     } )
-    // }
-
-
     const sendDataToAPI = async (data) => {
         try {
             await axios.post(`https://6479698ca455e257fa632c3a.mockapi.io/Signup`, {
@@ -79,6 +64,9 @@ const Create = () => {
         reset();
     };
 
+    useEffect(() => {
+        setUserName();
+    })
 
     return (
         <Grid>
@@ -97,13 +85,13 @@ const Create = () => {
                     <FormControl fullWidth>
 
                         {/* <TextField fullWidth name="username"
-                            label="Name" className='mb-3' color="secondary" {...register('name')} />
-                        {errors.name && <p className='text-danger'>{errors.name.message}</p>}
+                    label="Name" className='mb-3' color="secondary" {...register('name')} />
+                {errors.name && <p className='text-danger'>{errors.name.message}</p>}
 
 
-                        <TextField fullWidth name="phonenumber"
-                            label="Phonenumber" type='number' className='mb-3' color="secondary"  {...register('phoneNumber')} />
-                        {errors.phoneNumber && <p className='text-danger'>{errors.phoneNumber.message}</p>}  */}
+                <TextField fullWidth name="phonenumber"
+                    label="Phonenumber" type='number' className='mb-3' color="secondary"  {...register('phoneNumber')} />
+                {errors.phoneNumber && <p className='text-danger'>{errors.phoneNumber.message}</p>}  */}
                         <TextField
                             fullWidth
                             label='Name'
@@ -114,7 +102,7 @@ const Create = () => {
                             className='mb-3'
                             color='secondary'
                         />
-                        
+
 
                         <TextField
                             fullWidth
@@ -127,15 +115,15 @@ const Create = () => {
                             className='mb-3'
                             color='secondary'
                         />
-                    
+
 
                         {/* <TextField fullWidth name="email"
-                            label="Email Id" type='email' className='mb-3' color="secondary"  {...register('email')} />
-                        {errors.email && <p className='text-danger'>{errors.email.message}</p>}
+                    label="Email Id" type='email' className='mb-3' color="secondary"  {...register('email')} />
+                {errors.email && <p className='text-danger'>{errors.email.message}</p>}
 
-                        <TextField fullWidth name="password"
-                            label="Password" type='password' className='mb-3' color="secondary"  {...register('password')} />
-                        {errors.password && <p className='text-danger'>{errors.password.message}</p>} */}
+                <TextField fullWidth name="password"
+                    label="Password" type='password' className='mb-3' color="secondary"  {...register('password')} />
+                {errors.password && <p className='text-danger'>{errors.password.message}</p>} */}
 
                         <TextField
                             fullWidth
@@ -164,7 +152,7 @@ const Create = () => {
                         <FormControlLabel className='mt-3' required control={<Checkbox color="secondary" />} label="I accept the terms and conditions" />
 
                         <Tooltip title="Sign Up">
-                            <Button type='submit' variant="contained" className='mt-4 rounded-pill' color="secondary">Sign Up !</Button>
+                            <Button type='submit' variant="contained" className='mt-4 rounded-pill' color="secondary">Update</Button>
                         </Tooltip>
 
                     </FormControl>
@@ -175,7 +163,7 @@ const Create = () => {
 
             </Paper>
         </Grid>
-    );
+    )
 }
 
-export default Create
+export default Update

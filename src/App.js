@@ -4,24 +4,43 @@ import React, { useEffect, useState } from "react";
 import { expenses } from './component/data.js';
 import DemoContext from './component/context.js';
 import Create from './component/Create/Create';
+import Read from './component/Read/Read.js'
+
+import  Update  from  './component/Update/Update.js'
+import Delete from './component/Delete/Delete.js'
 
 
 // import Home from './Router/Home.js';
 // import Orders from './Router/Orders.js';
 // import Support from './Router/Support.js';
-// import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 // import './App.css'
 
 export default function App() {
   return (
+    <Routes>
+      
+        <Route exact path='/' element={<Create />} />
+          
+       
+        <Route path='/read' element={<Read />} />
+          
+        
+
+        <Route path='/update' element={<Update />} />
+        <Route path='/delete ' element={<Delete />} />
+
+      
+    </Routes>
+
     // <Routes>
-     
+
     //     <Route path='/' element={<Home />} />
     //     <Route path='/orders' element={<Orders />} />
     //     <Route path='/support' element={<Support />} />
-      
+
     // </Routes>
-<Create />
+
   );
 }
 
