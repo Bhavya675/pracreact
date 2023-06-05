@@ -7,7 +7,7 @@ import Create from './component/Create/Create';
 import Read from './component/Read/Read.js'
 
 import  Update  from  './component/Update/Update.js'
-import Delete from './component/Delete/Delete.js'
+
 
 
 // import Home from './Router/Home.js';
@@ -20,15 +20,15 @@ export default function App() {
   return (
     <Routes>
       
-        <Route exact path='/' element={<Create />} />
+        <Route exact path='/create' element={<Create />} />
           
        
-        <Route path='/read' element={<Read />} />
+        <Route exact path='/' element={<Read />} />
           
         
 
         <Route path='/update' element={<Update />} />
-        <Route path='/delete ' element={<Delete />} />
+        
 
       
     </Routes>

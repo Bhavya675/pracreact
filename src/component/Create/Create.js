@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 //Material UI Imports
 import { Avatar, Paper, Typography, TextField, Button, Tooltip } from '@mui/material';
@@ -15,6 +16,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 const Create = () => {
     const paperstyle = { padding: "30px 20px", width: 800, margin: "20px auto" }
+
+    let navigate = useNavigate();
     // const st = {
     //     maxHeight: 600
     // } 
@@ -42,6 +45,7 @@ const Create = () => {
         handleSubmit,
         formState: { errors },
         reset,
+        defaultValues,
     } = useForm({ resolver: yupResolver(schema) });
 
 
@@ -52,9 +56,10 @@ const Create = () => {
                 Phonenumber: data.phonenumber,
                 Email: data.email,
                 Password: data.password,
-            });
+            }).then(() => {
+                navigate('/');
+            })
             console.log('Data posted successfully!');
-            console.log(data.phonenumber)
         } catch (error) {
             console.error('Error posting data:', error);
         }
@@ -79,7 +84,6 @@ const Create = () => {
                 </Grid>
 
                 <form className='mt-5' onSubmit={handleSubmit(onSubmit)}>
-                    {/* ((data) => console.log(data))} */}
                     <FormControl fullWidth>
 
                         <TextField
