@@ -4,7 +4,9 @@ import React, { useEffect, useState } from "react";
 import { expenses } from './component/data.js';
 import DemoContext from './component/context.js';
 import Create from './component/Create/Create';
-import Read from './component/Read/Read.js'
+import Form from './component/CRUD/Form.js';
+//import Read from './component/Read/Read.js'
+import ReadData from './component/CRUD/ReadData.js'
 
 import  Update  from  './component/Update/Update.js'
 
@@ -20,13 +22,14 @@ export default function App() {
   return (
     <Routes>
       
-        <Route exact path='/create' element={<Create />} />
-          
-       
-        <Route exact path='/' element={<Read />} />
-          
-        
+        {/* <Route exact path='/create' element={<Create />} /> */}
 
+        {/* <Route exact path='/' element={<Read />} /> */}
+
+        <Route exact path='/form' element={<Form />} />
+
+        <Route exact path='/' element={<ReadData />} />
+          
         <Route path='/update' element={<Update />} />
         
 

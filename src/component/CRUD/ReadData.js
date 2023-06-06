@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { useNavigate , Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -28,21 +28,22 @@ const Read = () => {
         localStorage.setItem('phonenumber', Phonenumber);
         localStorage.setItem('email', Email);
         localStorage.setItem('password', Password);
+        navigate('/form', { state: true })
     }
 
     const handleDelete = (id) => {
         axios.delete(`https://6479698ca455e257fa632c3a.mockapi.io/Signup/${id}`)
-        .then(() => {
-            fetchData();
-        });
+            .then(() => {
+                fetchData();
+            });
     }
     return (
         <>
-           
-            <div className='d-flex justify-content-center mt-5'> 
-            <button onClick={() => navigate('/create')} className=' btn btn-secondary fs-4'><i className="bi bi-person-fill-add fs-3"></i> Add User</button>
+
+            <div className='d-flex justify-content-center mt-5'>
+                <button onClick={() => navigate('/form')} className=' btn btn-secondary fs-4'><i className="bi bi-person-fill-add fs-3"></i> Add User</button>
             </div>
-            
+
             <div className='d-flex justify-content-center align-item-center mt-5'>
 
                 <table className="table table-dark table-striped table-responsive w-50">
@@ -62,9 +63,9 @@ const Read = () => {
                                     <td>{data.Phonenumber}</td>
 
 
-                                    <td><Link to='/update'><button onClick={() => editField(data.id, data.Username, data.Phonenumber, data.Email, data.Password)} className='btn btn-success'><i className="bi bi-pencil-square"></i> Edit</button></Link></td>
-                                    
-                                    <td><button onClick={() => { if(window.confirm('Are You Sure Want to Delete User?')) {handleDelete(data.id)}}}  className='btn btn-danger'><i className="bi bi-trash3-fill"></i> Delete</button></td>
+                                    <td><button onClick={() => editField(data.id, data.Username, data.Phonenumber, data.Email, data.Password)} className='btn btn-success'><i className="bi bi-pencil-square"></i> Edit</button></td>
+
+                                    <td><button onClick={() => { if (window.confirm('Are You Sure Want to Delete User?')) { handleDelete(data.id) } }} className='btn btn-danger'><i className="bi bi-trash3-fill"></i> Delete</button></td>
                                 </tr>
                             )
 

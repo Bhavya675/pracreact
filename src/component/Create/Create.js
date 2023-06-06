@@ -45,7 +45,7 @@ const Create = () => {
         handleSubmit,
         formState: { errors },
         reset,
-        defaultValues,
+        // defaultValues,
     } = useForm({ resolver: yupResolver(schema) });
 
 
@@ -64,6 +64,7 @@ const Create = () => {
             console.error('Error posting data:', error);
         }
     };
+
 
     const onSubmit = (data) => {
         sendDataToAPI(data);
