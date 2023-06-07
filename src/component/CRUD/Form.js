@@ -19,20 +19,21 @@ const Form = () => {
 
     let navigate = useNavigate();
     const location = useLocation();
-    // const st = {
-    //     maxHeight: 600
-    // } 
-
-
+     
 
     const [id, setId] = useState(0);
-    const [editusername, setEditUserName] = useState('');
-    const [editphonenumber, setEditPhonenumber] = useState('');
-    const [editemail, setEditEmail] = useState('');
-    const [editpassword, setEditPassword] = useState('');
     const [editMode, setEditMode] = useState(false);
 
-    const [defaultValues, setDefaultValues] = useState({});
+    let mode = location.state
+
+    useEffect(() => {
+        if (mode) {
+            setEditMode(true);
+            setId(localStorage.getItem('id'));
+        }
+    }, [mode])
+    console.log(editMode);
+
 
     // ---------- Using form hook ---------- //
     const schema = yup.object().shape({
@@ -54,46 +55,21 @@ const Form = () => {
         handleSubmit,
         formState: { errors },
         reset,
-       defaultValue
-    } = useForm({ resolver: yupResolver(schema) });
 
-    let mode = location.state
-    useEffect(() => {
-
-        if (mode) {
-
-            setEditMode(true);
-
-            if (editMode) {
-
-                setId(localStorage.getItem('id'));
-                setEditUserName(localStorage.getItem('username'));
-                setEditPhonenumber(localStorage.getItem('phonenumber'));
-                setEditEmail(localStorage.getItem('email'));
-                setEditPassword(localStorage.getItem('password'));
-
-                // Set the default values for edit mode
-                setDefaultValues({
-                    username: editusername,
-                    phonenumber: editphonenumber,
-                    email: editemail,
-                    password: editpassword,
-                });
-                console.log(defaultValues)
-            }
-            else {
-                // Set empty default values for add mode
-                setDefaultValues({
-                    username: '',
-                    phonenumber: '',
-                    email: '',
-                    password: '',
-                });
-            }
+    } = useForm({
+        resolver: yupResolver(schema),
+        defaultValues: localStorage.getItem('id') ? {
+            username: localStorage.getItem('username'),
+            phonenumber: localStorage.getItem('phonenumber'),
+            email: localStorage.getItem('email'),
+            password: localStorage.getItem('password')
+        } : {
+            username: '',
+            phonenumber: '',
+            email: '',
+            password: ''
         }
-
-    },[])
-    console.log(editMode);
+    });
 
     // For Add User Data
     const sendDataToAPI = async (data) => {
@@ -117,19 +93,26 @@ const Form = () => {
         reset();
     };
 
+    
 
     // For Update User Data
-    const handleUpdate = () => {
-        
+    const updateDataToAPI = async (data) => {
+
         axios.put(`https://6479698ca455e257fa632c3a.mockapi.io/Signup/${id}`, {
-            Username: editusername,
-            Phonenumber: editphonenumber,
-            Email: editemail,
-            Password: editpassword,
+            Username: data.username,
+            Phonenumber: data.phonenumber,
+            Email: data.email,
+            Password: data.password,
         }).then(() => {
+            localStorage.clear();
             navigate('/');
         });
     }
+
+    const onEditSubmit = (data) => {
+        updateDataToAPI(data);
+        reset();
+    };
 
     return (
         <Grid>
@@ -145,19 +128,12 @@ const Form = () => {
 
 
 
-                <form className='mt-5' onSubmit={handleSubmit(editMode ? handleUpdate : onAddSubmit)}>
+                <form className='mt-5' onSubmit={handleSubmit(editMode ? onEditSubmit : onAddSubmit)}>
                     <FormControl fullWidth>
                         <TextField
                             fullWidth
                             label='Name'
                             name='username'
-                            defaultValue={defaultValues.username}
-                            // defaultValue={editMode ? username : ''}
-                            // value={username}
-                            onChange={(e) => {
-                                setEditUserName(e.target.value);
-                            }}
-
                             {...register('username')}
                             error={!!errors.username}
                             helperText={errors.username?.message}
@@ -169,12 +145,6 @@ const Form = () => {
                             fullWidth
                             label='Phone number'
                             name='phonenumber'
-                            // value={editMode ? phonenumber : ''}
-                            defaultValue={defaultValues.username}
-                            // value={phonenumber}
-                            onChange={(e) => {
-                                setEditPhonenumber(e.target.value)
-                            }}
                             type='number'
                             {...register('phonenumber')}
                             error={!!errors.phonenumber}
@@ -187,13 +157,6 @@ const Form = () => {
                             fullWidth
                             label='Email Id'
                             name='email'
-                            // value={editMode ? email : ''}
-
-                            // value={email}
-                            defaultValue={defaultValues.username}
-                            onChange={(e) => {
-                                setEditEmail(e.target.value);
-                            }}
                             type='email'
                             {...register('email')}
                             error={!!errors.email}
@@ -206,13 +169,6 @@ const Form = () => {
                             fullWidth
                             label='Password'
                             name='password'
-                            // value={editMode ? password : ''}
-
-                            // value={password}
-                            defaultValue={defaultValues.username}
-                            onChange={(e) => {
-                                setEditPassword(e.target.value);
-                            }}
                             type='password'
                             {...register('password')}
                             error={!!errors.password}
