@@ -23,55 +23,79 @@ const Form = () => {
     //     maxHeight: 600
     // } 
 
-    // ---------- Using form hook ---------- //
+
 
     const [id, setId] = useState(0);
-    const [username, setUserName] = useState('');
-    const [phonenumber, setPhonenumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [editusername, setEditUserName] = useState('');
+    const [editphonenumber, setEditPhonenumber] = useState('');
+    const [editemail, setEditEmail] = useState('');
+    const [editpassword, setEditPassword] = useState('');
     const [editMode, setEditMode] = useState(false);
 
-    // const schema = yup.object().shape({
-    //     username: yup.string().required('Name is required.').max(8, 'Name should be maximum 8 characters.'),
-    //     email: yup.string().required('Email is required.').email('Invalid email format.'),
-    //     password: yup
-    //         .string()
-    //         .required('Password is required.')
-    //         .matches(
-    //             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-    //             'Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, one digit, and one special character.'
-    //         ),
-    //     phonenumber: yup.string().required('Phone Number is required.').matches(/^\d{10}$/, 'Phone Number should be 10 digits.'),
+    const [defaultValues, setDefaultValues] = useState({});
 
-    // });
+    // ---------- Using form hook ---------- //
+    const schema = yup.object().shape({
+        username: yup.string().required('Name is required.').max(8, 'Name should be maximum 8 characters.'),
+        email: yup.string().required('Email is required.').email('Invalid email format.'),
+        password: yup
+            .string()
+            .required('Password is required.')
+            .matches(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                'Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, one digit, and one special character.'
+            ),
+        phonenumber: yup.string().required('Phone Number is required.').matches(/^\d{10}$/, 'Phone Number should be 10 digits.'),
 
-    // const {
-    //     register,
-    //     handleSubmit,
-    //     formState: { errors },
-    //     reset,
-    //     // defaultValues,
-    // } = useForm({ resolver: yupResolver(schema) });
+    });
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+       defaultValue
+    } = useForm({ resolver: yupResolver(schema) });
 
     let mode = location.state
     useEffect(() => {
 
-
         if (mode) {
+
             setEditMode(true);
-            setId(localStorage.getItem('id'));
-            setUserName(localStorage.getItem('username'));
-            setPhonenumber(localStorage.getItem('phonenumber'));
-            setEmail(localStorage.getItem('email'));
-            setPassword(localStorage.getItem('password'));
+
+            if (editMode) {
+
+                setId(localStorage.getItem('id'));
+                setEditUserName(localStorage.getItem('username'));
+                setEditPhonenumber(localStorage.getItem('phonenumber'));
+                setEditEmail(localStorage.getItem('email'));
+                setEditPassword(localStorage.getItem('password'));
+
+                // Set the default values for edit mode
+                setDefaultValues({
+                    username: editusername,
+                    phonenumber: editphonenumber,
+                    email: editemail,
+                    password: editpassword,
+                });
+                console.log(defaultValues)
+            }
+            else {
+                // Set empty default values for add mode
+                setDefaultValues({
+                    username: '',
+                    phonenumber: '',
+                    email: '',
+                    password: '',
+                });
+            }
         }
 
-
-    }, [mode])
+    },[])
     console.log(editMode);
 
-
+    // For Add User Data
     const sendDataToAPI = async (data) => {
         try {
             await axios.post(`https://6479698ca455e257fa632c3a.mockapi.io/Signup`, {
@@ -88,23 +112,24 @@ const Form = () => {
         }
     };
 
-    const handleUpdate = (e) => {
-        e.preventDefault();
+    const onAddSubmit = (data) => {
+        sendDataToAPI(data);
+        reset();
+    };
+
+
+    // For Update User Data
+    const handleUpdate = () => {
+        
         axios.put(`https://6479698ca455e257fa632c3a.mockapi.io/Signup/${id}`, {
-            Username: username,
-            Phonenumber: phonenumber,
-            Email: email,
-            Password: password,
+            Username: editusername,
+            Phonenumber: editphonenumber,
+            Email: editemail,
+            Password: editpassword,
         }).then(() => {
             navigate('/');
         });
     }
-
-    const onSubmit = (data) => {
-        sendDataToAPI(data);
-        // reset();
-    };
-
 
     return (
         <Grid>
@@ -118,21 +143,24 @@ const Form = () => {
 
                 </Grid>
 
-                <form className='mt-5' onSubmit={onSubmit}>
-                    <FormControl fullWidth>
 
+
+                <form className='mt-5' onSubmit={handleSubmit(editMode ? handleUpdate : onAddSubmit)}>
+                    <FormControl fullWidth>
                         <TextField
                             fullWidth
                             label='Name'
                             name='username'
-                            value={editMode ? username : ''}
+                            defaultValue={defaultValues.username}
+                            // defaultValue={editMode ? username : ''}
                             // value={username}
-                            // onChange={(e) => {
-                            //     setUserName(e.target.value);
-                            // }} 
-                            // {...register('username')}
-                            // error={!!errors.username}
-                            // helperText={errors.username?.message}
+                            onChange={(e) => {
+                                setEditUserName(e.target.value);
+                            }}
+
+                            {...register('username')}
+                            error={!!errors.username}
+                            helperText={errors.username?.message}
                             className='mb-3'
                             color='secondary'
                         />
@@ -141,16 +169,16 @@ const Form = () => {
                             fullWidth
                             label='Phone number'
                             name='phonenumber'
-                            value={editMode ? phonenumber : ''}
-                            
+                            // value={editMode ? phonenumber : ''}
+                            defaultValue={defaultValues.username}
                             // value={phonenumber}
-                            // onChange={(e) => {
-                            //     setPhonenumber(e.target.value)
-                            // }}
+                            onChange={(e) => {
+                                setEditPhonenumber(e.target.value)
+                            }}
                             type='number'
-                            // {...register('phonenumber')}
-                            // error={!!errors.phonenumber}
-                            // helperText={errors.phonenumber?.message}
+                            {...register('phonenumber')}
+                            error={!!errors.phonenumber}
+                            helperText={errors.phonenumber?.message}
                             className='mb-3'
                             color='secondary'
                         />
@@ -159,16 +187,17 @@ const Form = () => {
                             fullWidth
                             label='Email Id'
                             name='email'
-                            value={editMode ? email : ''}
+                            // value={editMode ? email : ''}
 
                             // value={email}
-                            // onChange={(e) => {
-                            //     setEmail(e.target.value);
-                            // }}
+                            defaultValue={defaultValues.username}
+                            onChange={(e) => {
+                                setEditEmail(e.target.value);
+                            }}
                             type='email'
-                            // {...register('email')}
-                            // error={!!errors.email}
-                            // helperText={errors.email?.message}
+                            {...register('email')}
+                            error={!!errors.email}
+                            helperText={errors.email?.message}
                             className='mb-3'
                             color='secondary'
                         />
@@ -177,22 +206,23 @@ const Form = () => {
                             fullWidth
                             label='Password'
                             name='password'
-                            value={editMode ? password : ''}
+                            // value={editMode ? password : ''}
 
                             // value={password}
-                            // onChange={(e) => {
-                            //     setPassword(e.target.value);
-                            // }}
+                            defaultValue={defaultValues.username}
+                            onChange={(e) => {
+                                setEditPassword(e.target.value);
+                            }}
                             type='password'
-                            // {...register('password')}
-                            // error={!!errors.password}
-                            // helperText={errors.password?.message}
+                            {...register('password')}
+                            error={!!errors.password}
+                            helperText={errors.password?.message}
                             className='mb-3'
                             color='secondary'
                         />
 
-                        {editMode?"":<FormControlLabel className='mt-3' required control={<Checkbox color="secondary" />} label="I accept the terms and conditions" />}
-                        
+                        {editMode ? "" : <FormControlLabel className='mt-3' required control={<Checkbox color="secondary" />} label="I accept the terms and conditions" />}
+
                         <Tooltip title={editMode ? 'Update' : 'Sign Up'}>
                             <Button type='submit' variant="contained" className='mt-4 rounded-pill' color="secondary">
                                 {editMode ? 'Update' : 'Sign Up'}
