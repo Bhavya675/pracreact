@@ -31,8 +31,13 @@ const Form = () => {
             setEditMode(true);
             setId(localStorage.getItem('id'));
         }
+        
     }, [mode])
     console.log(editMode);
+
+    if(editMode){
+        localStorage.clear();
+    }
 
 
     // ---------- Using form hook ---------- //
@@ -121,8 +126,8 @@ const Form = () => {
                     <Avatar>
 
                     </Avatar>
-                    <h2 className='mt-2'>Sign Up!</h2>
-                    <Typography variant='h6'>Let you just quick sign up and join our community!</Typography>
+                    {editMode ? <h2 className='mt-2'>Update Your Profile!</h2> : <h2 className='mt-2'>Sign Up!</h2>}
+                    {editMode ? <Typography variant='h6'>Update user profile</Typography> : <Typography variant='h6'>Let you just quick sign up and join our community!</Typography>}
 
                 </Grid>
 

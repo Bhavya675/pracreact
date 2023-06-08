@@ -1,39 +1,43 @@
 //importing comoponents
-import { TestToComponent } from './component/demo.js';
+
 import React, { useEffect, useState } from "react";
+import { Routes, Route } from 'react-router-dom';
+
 import { expenses } from './component/data.js';
+import { TestToComponent } from './component/demo.js';
 import DemoContext from './component/context.js';
-import Create from './component/Create/Create';
 import Form from './component/CRUD/Form.js';
-import Read from './component/Read/Read.js'
-import ReadData from './component/CRUD/ReadData.js'
-
-import  Update  from  './component/Update/Update.js'
+import ReadData from './component/CRUD/ReadData.js';
 
 
-
+//import Create from './component/Create/Create';
+//import Read from './component/Read/Read.js';
+//import  Update  from  './component/Update/Update.js';
 // import Home from './Router/Home.js';
 // import Orders from './Router/Orders.js';
 // import Support from './Router/Support.js';
-import { Routes, Route } from 'react-router-dom';
 // import './App.css'
+
+
 
 export default function App() {
   return (
     <Routes>
-      
-        {/* <Route exact path='/create' element={<Create />} />
 
-        <Route exact path='/' element={<Read />} /> */}
+      {/* <Route exact path='/create' element={<Create />} />
 
-        <Route exact path='/form' element={<Form />} />
+      <Route exact path='/' element={<Read />} />
 
-        <Route exact path='/' element={<ReadData />} />
-          
-        <Route path='/update' element={<Update />} />
-        
+      <Route path='/update' element={<Update />} /> */}
 
-      
+      <Route exact path='/form' element={<Form />} />
+
+      <Route exact path='/' element={<ReadData />} />
+
+
+
+
+
     </Routes>
 
     // <Routes>
