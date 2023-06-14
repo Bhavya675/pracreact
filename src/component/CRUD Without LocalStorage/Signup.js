@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+
 //Material UI Imports
 import { Avatar, Paper, Typography, TextField, Button, Tooltip } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -13,31 +14,25 @@ import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Unstable_Grid2';
 
 
-
 const Form = () => {
     const paperstyle = { padding: "30px 20px", width: 800, margin: "20px auto" }
 
     let navigate = useNavigate();
     const location = useLocation();
-     
 
-    const [id, setId] = useState(0);
-    const [editMode, setEditMode] = useState(false);
+    const editMode = location.state
 
-    let mode = location.state
+    const [id, setId] = useState();
+    
+
 
     useEffect(() => {
-        if (mode) {
-            setEditMode(true);
-            setId(localStorage.getItem('id'));
+
+        if (editMode) {
+            setId(editMode.id);
         }
         
-    }, [mode])
-    console.log(editMode);
-
-    if(editMode){
-        localStorage.clear();
-    }
+    }, [editMode])
 
 
     // ---------- Using form hook ---------- //
@@ -63,11 +58,11 @@ const Form = () => {
 
     } = useForm({
         resolver: yupResolver(schema),
-        defaultValues: localStorage.getItem('id') ? {
-            username: localStorage.getItem('username'),
-            phonenumber: localStorage.getItem('phonenumber'),
-            email: localStorage.getItem('email'),
-            password: localStorage.getItem('password')
+        defaultValues: editMode ? {
+            username: editMode.Username,
+            phonenumber: editMode.Phonenumber,
+            email: editMode.Email,
+            password: editMode.Password,
         } : {
             username: '',
             phonenumber: '',
@@ -87,6 +82,7 @@ const Form = () => {
             }).then(() => {
                 navigate('/');
             })
+            
             console.log('Data posted successfully!');
         } catch (error) {
             console.error('Error posting data:', error);
@@ -98,7 +94,7 @@ const Form = () => {
         reset();
     };
 
-    
+
 
     // For Update User Data
     const updateDataToAPI = async (data) => {
@@ -109,9 +105,9 @@ const Form = () => {
             Email: data.email,
             Password: data.password,
         }).then(() => {
-            localStorage.clear();
             navigate('/');
         });
+
     }
 
     const onEditSubmit = (data) => {
@@ -123,15 +119,14 @@ const Form = () => {
         <Grid>
             <Paper elevation={3} style={paperstyle} className='bg-info-subtle rounded-5 mt-5'>
                 <Grid align="center">
-                    <Avatar>
 
+                    <Avatar>
                     </Avatar>
+
                     {editMode ? <h2 className='mt-2'>Update Your Profile!</h2> : <h2 className='mt-2'>Sign Up!</h2>}
                     {editMode ? <Typography variant='h6'>Update user profile</Typography> : <Typography variant='h6'>Let you just quick sign up and join our community!</Typography>}
 
                 </Grid>
-
-
 
                 <form className='mt-5' onSubmit={handleSubmit(editMode ? onEditSubmit : onAddSubmit)}>
                     <FormControl fullWidth>

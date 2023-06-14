@@ -6,17 +6,17 @@ import { Routes, Route } from 'react-router-dom';
 import { expenses } from './component/data.js';
 import { TestToComponent } from './component/demo.js';
 import DemoContext from './component/context.js';
-import Form from './component/CRUD/Form.js';
-import ReadData from './component/CRUD/ReadData.js';
 
+// import Form from './component/CRUD With LocalStorage/Form.js';
+// import ReadData from './component/CRUD With LocalStorage/ReadData.js';
 
-//import Create from './component/Create/Create';
-//import Read from './component/Read/Read.js';
-//import  Update  from  './component/Update/Update.js';
+import Users from './component/CRUD Without LocalStorage/Users.js';
+import Signup from './component/CRUD Without LocalStorage/Signup.js';
+
 // import Home from './Router/Home.js';
 // import Orders from './Router/Orders.js';
 // import Support from './Router/Support.js';
-// import './App.css'
+
 
 
 
@@ -24,19 +24,9 @@ export default function App() {
   return (
     <Routes>
 
-      {/* <Route exact path='/create' element={<Create />} />
+      <Route exact path='/form' element={<Signup />} />
 
-      <Route exact path='/' element={<Read />} />
-
-      <Route path='/update' element={<Update />} /> */}
-
-      <Route exact path='/form' element={<Form />} />
-
-      <Route exact path='/' element={<ReadData />} />
-
-
-
-
+      <Route exact path='/' element={<Users />} />
 
     </Routes>
 
@@ -53,7 +43,7 @@ export default function App() {
 
 // Creating Demo Components //
 
-//Component For Default Export
+// Component For Default Export
 export function TestComponent() {
   return <h1>This is Test Component</h1>;
 }
