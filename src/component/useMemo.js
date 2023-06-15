@@ -19,7 +19,7 @@ function Counter() {
         return counterOne % 2 === 0
     }, [counterOne])
 
-    const isDivisibleByThree = () =>{
+    const isDivisibleByThree = () => {
         let i = 0;
         while (i < 2000) i++
         console.log(i)
@@ -28,31 +28,30 @@ function Counter() {
 
     return (
         <>
-         <h2 className='mb-2 mt-5'>Example of useMemo(Kindely check the load)</h2>
-     
-        <div className='mt-4 d-flex mb-5'>
-           
-            <div>
-                <p className='fs-5 '>{counterOne}</p>
-                <button className='btn btn-secondary' onClick={incrementOne}>Increment By One</button>
-                <span>{isEven ? 'Even' : 'Odd'}</span>
+            <h2 className='mb-2 mt-5'>Example of useMemo(Kindely check the load)</h2>
+
+            <div className='mt-4 d-flex mb-5'>
+
+                <div>
+                    <p className='fs-5 '>{counterOne}</p>
+                    <button className='btn btn-secondary' onClick={incrementOne}>Increment By One</button>
+                    <span>{isEven ? 'Even' : 'Odd'}</span>
+                </div>
+
+                <div>
+                    <p>{counterTwo}</p>
+                    <button className='btn btn-secondary' onClick={incrementTwo}>Increment By Two</button>
+                    <span>{isDivisibleByThree() ? 'Divisible By Three' : 'Not Divisible By Three'}</span>
+                </div>
+
             </div>
-
-            <div>
-                <p>{counterTwo}</p>
-                <button className='btn btn-secondary' onClick={incrementTwo}>Increment By Two</button>
-                <span>{isDivisibleByThree() ? 'Divisible By Three' : 'Not Divisible By Three'}</span>
-            </div>
-
-
-        </div>
         </>
     );
 }
 
 
 
-  
-  
+
+
 
 export default Counter;

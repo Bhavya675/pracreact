@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { schema } from '../Validations/UserValidations'
+
 
 //Material UI Imports
 import { Avatar, Paper, Typography, TextField, Button, Tooltip } from '@mui/material';
@@ -11,7 +11,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Unstable_Grid2';
-
+import { sendData, updateData } from '../API/UserAPI';
 
 
 const Form = () => {
@@ -21,40 +21,34 @@ const Form = () => {
     const location = useLocation();
 
 
-    const [id, setId] = useState(0);
-    const [editMode, setEditMode] = useState(false);
+const editMode = location.state
+    console.log(editMode)
 
-    let mode = location.state
+    const [id, setId] = useState();
 
     useEffect(() => {
 
-        if (mode) {
-            setEditMode(true);
-            setId(localStorage.getItem('id'));
+        if (editMode) {
+            setId(editMode.id);
         }
 
-    }, [mode])
-
-
-    if (editMode) {
-        localStorage.clear();
-    }
+    }, [editMode])
 
 
     // ---------- Using form hook ---------- //
-    const schema = yup.object().shape({
-        username: yup.string().required('Name is required.').max(8, 'Name should be maximum 8 characters.'),
-        email: yup.string().required('Email is required.').email('Invalid email format.'),
-        password: yup
-            .string()
-            .required('Password is required.')
-            .matches(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                'Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, one digit, and one special character.'
-            ),
-        phonenumber: yup.string().required('Phone Number is required.').matches(/^\d{10}$/, 'Phone Number should be 10 digits.'),
+    // const schema = yup.object().shape({
+    //     username: yup.string().required('Name is required.').max(8, 'Name should be maximum 8 characters.'),
+    //     email: yup.string().required('Email is required.').email('Invalid email format.'),
+    //     password: yup
+    //         .string()
+    //         .required('Password is required.')
+    //         .matches(
+    //             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    //             'Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, one digit, and one special character.'
+    //         ),
+    //     phonenumber: yup.string().required('Phone Number is required.').matches(/^\d{10}$/, 'Phone Number should be 10 digits.'),
 
-    });
+    // });
 
     const {
         register,
@@ -64,11 +58,11 @@ const Form = () => {
 
     } = useForm({
         resolver: yupResolver(schema),
-        defaultValues: localStorage.getItem('id') ? {
-            username: localStorage.getItem('username'),
-            phonenumber: localStorage.getItem('phonenumber'),
-            email: localStorage.getItem('email'),
-            password: localStorage.getItem('password')
+        defaultValues: editMode ? {
+            username: editMode.Username,
+            phonenumber: editMode.Phonenumber,
+            email: editMode.Email,
+            password: editMode.Password,
         } : {
             username: '',
             phonenumber: '',
@@ -79,19 +73,10 @@ const Form = () => {
 
     // For Add User Data
     const sendDataToAPI = async (data) => {
-        try {
-            await axios.post(`https://6479698ca455e257fa632c3a.mockapi.io/Signup`, {
-                Username: data.username,
-                Phonenumber: data.phonenumber,
-                Email: data.email,
-                Password: data.password,
-            }).then(() => {
-                navigate('/');
-            })
-            console.log('Data posted successfully!');
-        } catch (error) {
-            console.error('Error posting data:', error);
-        }
+
+        await sendData(data);
+        navigate('/');
+
     };
 
     const onAddSubmit = (data) => {
@@ -102,17 +87,10 @@ const Form = () => {
 
 
     // For Update User Data
-    const updateDataToAPI = async (data) => {
-
-        axios.put(`https://6479698ca455e257fa632c3a.mockapi.io/Signup/${id}`, {
-            Username: data.username,
-            Phonenumber: data.phonenumber,
-            Email: data.email,
-            Password: data.password,
-        }).then(() => {
-            localStorage.clear();
-            navigate('/');
-        });
+    const updateDataToAPI =  (data) => {
+        
+        updateData({id}, data);
+        navigate('/');
 
     }
 

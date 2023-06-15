@@ -1,40 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { userDelete, userData } from '../API/UserAPI';
+
 
 const Read = () => {
   let navigate = useNavigate();
   const [apiData, setApiData] = useState([]);
+ 
 
-  const fetchData = () => {
-    axios
-      .get(`https://6479698ca455e257fa632c3a.mockapi.io/Signup`)
-      .then((getData) => {
-        setApiData(getData.data);
-      });
+  const editField = (user) => {
+    navigate('/form', { state: user });
+  };
+
+  const handleDelete = async (id) => {
+    await userDelete(id);
+    fetchData();
+  };
+
+ const fetchData = async () => {
+   const fetchUser = await userData();
+     setApiData(fetchUser);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const editField = (user) => {
-    navigate('/form', { state: user });
-  };
-
-  const handleDelete = (id) => {
-    axios
-      .delete(`https://6479698ca455e257fa632c3a.mockapi.io/Signup/${id}`)
-      .then(() => {
-        fetchData();
-      });
-  };
-
   return (
     <>
       <div className='d-flex justify-content-center mt-5'>
         <button
-          onClick={() => navigate('/form' , { add: false })}
+          onClick={() => navigate('/form')}
           className=' btn btn-secondary fs-4'
         >
           <i className='bi bi-person-fill-add fs-3'></i> Add User
@@ -69,7 +65,7 @@ const Read = () => {
 
                   <td>
                     <button
-                      onClick={() => {
+                       onClick={() => {
                         if (window.confirm('Are You Sure Want to Delete User?')) {
                           handleDelete(data.id);
                         }

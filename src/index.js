@@ -18,6 +18,7 @@ import App from './App'
 // import TodoList from './component/UseCallback'
 // import {ToggleButton} from './component/UseCallback'
 //import PrimarySearchAppBar from './component/MaterialDemo'
+//import GridDemo from './Pages/UI/GridDemo'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -37,10 +38,9 @@ root.render(
     <RefDemo />
     <TodoList />
      */}
+      {/* <MaterialDemo /> */}
       <BrowserRouter>
         <App />
-        
-        {/* <MaterialDemo /> */}
       </BrowserRouter>
 
 

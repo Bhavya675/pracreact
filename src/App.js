@@ -7,11 +7,9 @@ import { expenses } from './component/data.js';
 import { TestToComponent } from './component/demo.js';
 import DemoContext from './component/context.js';
 
-// import Form from './component/CRUD With LocalStorage/Form.js';
-// import ReadData from './component/CRUD With LocalStorage/ReadData.js';
-
-import Users from './component/CRUD Without LocalStorage/Users.js';
-import Signup from './component/CRUD Without LocalStorage/Signup.js';
+// Pages
+import Users from './Pages/Users.js';
+import Signup from './Pages/Signup.js';
 
 // import Home from './Router/Home.js';
 // import Orders from './Router/Orders.js';
@@ -28,15 +26,11 @@ export default function App() {
 
       <Route exact path='/' element={<Users />} />
 
+      {/* <Route path='/' element={<Home />} /> */}
+      {/* <Route path='/orders' element={<Orders />} /> */}
+      {/* <Route path='/support' element={<Support />} /> */}
+
     </Routes>
-
-    // <Routes>
-
-    //     <Route path='/' element={<Home />} />
-    //     <Route path='/orders' element={<Orders />} />
-    //     <Route path='/support' element={<Support />} />
-
-    // </Routes>
 
   );
 }
