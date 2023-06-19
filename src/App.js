@@ -3,9 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from 'react-router-dom';
 
-import { expenses } from './component/data.js';
-import { TestToComponent } from './component/demo.js';
-import DemoContext from './component/context.js';
+import { expenses } from './Components/data.js';
+import { TestToComponent } from './Components/demo.js';
+import DemoContext from './Components/context.js';
+import Maps from "./Components/Maps.js";
 
 // Pages
 import Users from './Pages/Users.js';
@@ -20,17 +21,23 @@ import Signup from './Pages/Signup.js';
 
 export default function App() {
   return (
-    <Routes>
+    <>
+      <Routes>
 
-      <Route exact path='/form' element={<Signup />} />
+        {/* <Route exact path='/form' element={<Signup />} />
 
-      <Route exact path='/' element={<Users />} />
+        <Route exact path='/' element={<Users />} /> */}
 
-      {/* <Route path='/' element={<Home />} /> */}
-      {/* <Route path='/orders' element={<Orders />} /> */}
-      {/* <Route path='/support' element={<Support />} /> */}
+        {/* <Route path='/' element={<Home />} /> */}
+        {/* <Route path='/orders' element={<Orders />} /> */}
+        {/* <Route path='/support' element={<Support />} /> */}
 
-    </Routes>
+      </Routes>
+
+      <Maps />
+    </>
+
+
 
   );
 }
