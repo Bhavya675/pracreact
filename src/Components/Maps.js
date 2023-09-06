@@ -17,7 +17,7 @@ const Maps = () => {
         iconSize: [32, 32],
         iconAnchor: [16, 32],
     });
-
+    
     const paperstyle = { padding: "30px 20px", width: 800, margin: "20px auto" }
 
     const handleFormSubmit = (event) => {
@@ -32,14 +32,15 @@ const Maps = () => {
             alert('Invalid latitude or longitude!');
             return;
         }
+
     };
 
     return (
         <div className="App">
-            <Paper elevation={3} style={paperstyle} className='bg-info-subtle rounded-5 mt-5'>
+            <Paper elevation={3} style={paperstyle} className='bg-info-subtle rounded-5 mt-5 d-flex justify-content-center flex-column w-25'>
 
-                <h2 className='d-flex justify-content-center align-item-center'>Find Location</h2>
-
+                <h2 className='d-flex justify-content-center align-item-center'>Find Locations</h2>
+                
                 <form onSubmit={handleFormSubmit} className='d-flex justify-content-center flex-column'>
                     <FormControl fullWidth>
                         <TextField
@@ -58,7 +59,7 @@ const Maps = () => {
                         />
                     </FormControl>
 
-                    {/* <button type="submit" className='btn btn-secondary mt-3'>Show Location</button> */}
+                    <button type="submit" className='btn btn-secondary mt-3'>Show Location</button>
                 </form>
             </Paper>
 
@@ -74,75 +75,67 @@ const Maps = () => {
                                 </Popup>
                             </Marker>
                         </MarkerClusters>
-
                     </MapContainer>
                 </div>
             )}
+
         </div>
     );
 }
 
 export default Maps
 
-// import { GoogleMap, LoadScript, Marker } from 'react-google-maps';
-
-// const containerStyle = {
-//     width: '100%',
-//     height: '400px',
-// };
-
-// const paperstyle = { padding: "30px 20px", width: 800, margin: "20px auto" }
-
-// const center = {
-//     lat: 0,
-//     lng: 0,
-// };
-
-// function Maps() {
-//     const [lat, setLat] = useState('');
-//     const [lng, setLng] = useState('');
 
 
-//     const handleFormSubmit = (event) => {
-//         event.preventDefault();
-//         center.lat = parseFloat(lat);
-//         center.lng = parseFloat(lng);
-//     };
+export const MultipleMarker = () => {
 
-//     return (
-//         <div>
-//             <Paper elevation={3} style={paperstyle} className='bg-info-subtle rounded-5 mt-5'>
+    const [showAllPumps, setShowAllPumps] = useState(false);
 
-//                 <h2 className='d-flex justify-content-center align-item-center'>Find Location</h2>
+    const customIcon = L.icon({
+        iconUrl: require('../Assets/fuel-station.png'),
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+    });
 
-//                 <form onSubmit={handleFormSubmit} className='d-flex justify-content-center flex-column'>
-//                     <FormControl fullWidth>
-//                         <TextField
-//                             fullWidth
-//                             label='Latitude'
-//                             onChange={(e) => setLat(e.target.value)}
-//                             className='mb-3 mt-3'
-//                             color='secondary'
-//                         />
+    const petrolPumps = [
+        { id: 1, name: 'Bharat Petroleum', latitude: 23.03877773436723, longitude: 72.51175055198293 },
+        { id: 2, name: 'IndianOil', latitude: 23.036805203718668, longitude: 72.51996722348767 },
+        { id: 3, name: 'HP Petrol Pump', latitude: 23.03271915551481, longitude: 72.51297539742463 },
+        { id: 4, name: 'HShree Siddhivinayak Petroleum', latitude: 23.04089386073751, longitude: 72.51834811970393 },
+        { id: 5, name: 'Nayara Petrol Pump', latitude: 23.036485372572226, longitude: 72.50233743571953 },
+    ]
 
-//                         <TextField
-//                             fullWidth
-//                             label='Longitude'
-//                             onChange={(e) => setLng(e.target.value)}
-//                             color='secondary'
-//                         />
-//                     </FormControl>
+    const handleShowAllPumps = () => {
+        setShowAllPumps(true);
+      };
 
-//                     {/* <button type="submit" className='btn btn-secondary mt-3'>Show Location</button> */}
-//                 </form>
-//             </Paper>
-//             <LoadScript googleMapsApiKey="API-Key">
-//                 <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
-//                     <Marker position={center} />
-//                 </GoogleMap>
-//             </LoadScript>
-//         </div>
-//     );
-// }
+    const paperstyle = { padding: "30px 20px", width: 800, margin: "20px auto" }
 
-// export default Maps;
+    return (
+        <div className="App">
+            <Paper elevation={3} style={paperstyle} className='bg-info-subtle rounded-5 mt-5 d-flex justify-content-center flex-column w-25'>
+
+                <h2 className='d-flex justify-content-center align-item-center'>Find Petrol Pumps</h2>
+                <button onClick={handleShowAllPumps} className='btn btn-secondary rounded-pill mt-3'>Show Nearby Petrol Pumps</button>
+                
+            </Paper>
+
+            <MapContainer center={[23.034225, 72.511578]} zoom={13} style={{ height: '100vh', marginTop: '20px' }} scrollWheelZoom={false} className='m-4 rounded-4 border border-black'>
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                {showAllPumps &&
+                    <MarkerClusters>
+                        {petrolPumps.map((pump) => (
+                            <Marker key={pump.id} position={[pump.latitude, pump.longitude]} icon={customIcon}>
+                                <Popup>
+                                    <h6>{pump.name}</h6>
+                                </Popup>
+                            </Marker>
+                        ))}
+                    </MarkerClusters>
+                }
+            </MapContainer>
+
+
+        </div>
+    );
+}

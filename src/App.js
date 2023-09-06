@@ -7,6 +7,7 @@ import { expenses } from './Components/data.js';
 import { TestToComponent } from './Components/demo.js';
 import DemoContext from './Components/context.js';
 import Maps from "./Components/Maps.js";
+import { MultipleMarker } from "./Components/Maps.js";
 
 // Pages
 import Users from './Pages/Users.js';
@@ -34,7 +35,8 @@ export default function App() {
 
       </Routes>
 
-      <Maps />
+      {/* <Maps /> */}
+      <MultipleMarker />
     </>
 
 
